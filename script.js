@@ -1,5 +1,4 @@
 (() => {
-  // Load site enhancements everywhere without having to duplicate CSS links across older pages.
   if (!document.querySelector('link[href$="enhancements.css"]')) {
     const extra = document.createElement('link');
     extra.rel = 'stylesheet';
@@ -7,7 +6,6 @@
     document.head.appendChild(extra);
   }
 
-  // Push the top utility bar toward phone calls instead of email.
   document.querySelectorAll('.topbar a[href^="mailto:"]').forEach(link => {
     link.href = 'tel:+14173508848';
     link.textContent = 'Talk to Eric →';
@@ -19,10 +17,8 @@
 
   const buildDropdown = (link, type) => {
     if (!link || link.closest('.nav-dropdown')) return;
-
     const wrap = document.createElement('div');
     wrap.className = 'nav-dropdown';
-
     const trigger = link.cloneNode(true);
     trigger.classList.add('nav-drop-trigger');
     trigger.removeAttribute('aria-current');
@@ -30,7 +26,6 @@
     trigger.innerHTML = `${label} <span class="nav-arrow" aria-hidden="true">⌄</span>`;
     trigger.setAttribute('aria-haspopup', 'true');
     trigger.setAttribute('aria-expanded', 'false');
-
     const menu = document.createElement('div');
     menu.className = `nav-drop-menu ${type === 'areas' ? 'nav-area-menu' : ''}`;
 
@@ -46,27 +41,19 @@
     } else {
       menu.innerHTML = `
         <div class="area-menu-grid">
-          <a href="/service-areas/springfield-mo.html">Springfield</a>
-          <a href="/service-areas/nixa-mo.html">Nixa</a>
-          <a href="/service-areas/ozark-mo.html">Ozark</a>
-          <a href="/service-areas/republic-mo.html">Republic</a>
-          <a href="/service-areas/battlefield-mo.html">Battlefield</a>
-          <a href="/service-areas/willard-mo.html">Willard</a>
-          <a href="/service-areas/strafford-mo.html">Strafford</a>
-          <a href="/service-areas/rogersville-mo.html">Rogersville</a>
-          <a href="/service-areas/bolivar-mo.html">Bolivar</a>
-          <a href="/service-areas/aurora-mo.html">Aurora</a>
-          <a href="/service-areas/branson-mo.html">Branson</a>
-          <a href="/service-areas/hollister-mo.html">Hollister</a>
-          <a href="/service-areas/marshfield-mo.html">Marshfield</a>
-          <a href="/service-areas/seymour-mo.html">Seymour</a>
+          <a href="/service-areas/springfield-mo.html">Springfield</a><a href="/service-areas/nixa-mo.html">Nixa</a>
+          <a href="/service-areas/ozark-mo.html">Ozark</a><a href="/service-areas/republic-mo.html">Republic</a>
+          <a href="/service-areas/battlefield-mo.html">Battlefield</a><a href="/service-areas/willard-mo.html">Willard</a>
+          <a href="/service-areas/strafford-mo.html">Strafford</a><a href="/service-areas/rogersville-mo.html">Rogersville</a>
+          <a href="/service-areas/bolivar-mo.html">Bolivar</a><a href="/service-areas/aurora-mo.html">Aurora</a>
+          <a href="/service-areas/branson-mo.html">Branson</a><a href="/service-areas/hollister-mo.html">Hollister</a>
+          <a href="/service-areas/marshfield-mo.html">Marshfield</a><a href="/service-areas/seymour-mo.html">Seymour</a>
         </div>
         <a class="drop-all" href="/service-areas.html">View All 50 Service Areas →</a>`;
     }
 
     link.replaceWith(wrap);
     wrap.append(trigger, menu);
-
     trigger.addEventListener('click', e => {
       if (window.innerWidth <= 980) {
         e.preventDefault();
@@ -87,7 +74,6 @@
       toggle.setAttribute('aria-expanded', String(open));
       toggle.textContent = open ? '×' : '☰';
     });
-
     nav.addEventListener('click', e => {
       const link = e.target.closest('a');
       if (!link || link.classList.contains('nav-drop-trigger')) return;
@@ -106,6 +92,40 @@
       });
     }
   });
+
+  // Homepage: put the free-estimate form above the fold on the right side.
+  const heroContainer = document.querySelector('.hero > .container');
+  if (heroContainer && !heroContainer.querySelector('.hero-quote-card')) {
+    heroContainer.classList.add('hero-grid');
+    const copy = document.createElement('div');
+    copy.className = 'hero-copy';
+    while (heroContainer.firstChild) copy.appendChild(heroContainer.firstChild);
+    heroContainer.appendChild(copy);
+
+    const card = document.createElement('div');
+    card.className = 'hero-quote-card';
+    card.innerHTML = `
+      <span class="eyebrow">Free Project Estimate</span>
+      <h2>Tell Eric what needs repaired.</h2>
+      <p class="quote-sub">No obligation. Fast response from a local owner-operated company.</p>
+      <form name="homepage-estimate" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html">
+        <input type="hidden" name="form-name" value="homepage-estimate">
+        <p hidden><label>Don't fill this out: <input name="bot-field"></label></p>
+        <div class="form-grid">
+          <div class="field"><label>First Name</label><input name="first-name" autocomplete="given-name" required placeholder="John"></div>
+          <div class="field"><label>Last Name</label><input name="last-name" autocomplete="family-name" placeholder="Smith"></div>
+          <div class="field"><label>Phone Number</label><input name="phone" type="tel" autocomplete="tel" required placeholder="417-555-0000"></div>
+          <div class="field"><label>Email Address</label><input name="email" type="email" autocomplete="email" placeholder="you@email.com"></div>
+          <div class="field full"><label>Service Needed</label><select name="service" required><option value="">Choose a service</option><option>Masonry Repair</option><option>Tuckpointing</option><option>Chimney / Fireplace Masonry</option><option>Foundation Crack Repair</option><option>Basement Waterproofing</option><option>Concrete Repair</option><option>Exterior Caulking / Sealing</option><option>Other</option></select></div>
+          <div class="field full"><label>Your City / ZIP</label><input name="city" autocomplete="address-level2" required placeholder="Springfield, MO or 65804"></div>
+          <div class="field full"><label>Tell Us About Your Project</label><textarea name="message" required placeholder="What is cracked, leaking, loose or damaged?"></textarea></div>
+          <div class="field full"><button class="btn btn-primary" type="submit">Submit Free Estimate Request →</button></div>
+        </div>
+      </form>
+      <p class="hero-form-trust">🔒 Private & secure. No spam.</p>
+      <p class="hero-call-note">Prefer to talk? <a href="tel:+14173508848">Call (417) 350-8848</a></p>`;
+    heroContainer.appendChild(card);
+  }
 
   document.querySelectorAll('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
 
