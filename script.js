@@ -6,6 +6,13 @@
     document.head.appendChild(extra);
   }
 
+  // Keep the same approved ESE Seal & Restoration logo everywhere on the site.
+  document.querySelectorAll('.brand img, img.footer-logo').forEach(img => {
+    img.src = '/ESESealLogo.png';
+    img.alt = 'ESE Seal & Restoration';
+    img.removeAttribute('srcset');
+  });
+
   document.querySelectorAll('.topbar .container > span').forEach(el => {
     el.textContent = 'Serving a 60-Mile Radius Around Springfield, MO';
   });
