@@ -1,18 +1,111 @@
 (() => {
-  const toggle = document.querySelector('.nav-toggle');
+  // Load site enhancements everywhere without having to duplicate CSS links across older pages.
+  if (!document.querySelector('link[href$="enhancements.css"]')) {
+    const extra = document.createElement('link');
+    extra.rel = 'stylesheet';
+    extra.href = '/enhancements.css';
+    document.head.appendChild(extra);
+  }
+
+  // Push the top utility bar toward phone calls instead of email.
+  document.querySelectorAll('.topbar a[href^="mailto:"]').forEach(link => {
+    link.href = 'tel:+14173508848';
+    link.textContent = 'Talk to Eric →';
+    link.setAttribute('aria-label', 'Call Eric Enlow at 417-350-8848');
+  });
+
   const nav = document.querySelector('.nav-links');
+  const toggle = document.querySelector('.nav-toggle');
+
+  const buildDropdown = (link, type) => {
+    if (!link || link.closest('.nav-dropdown')) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'nav-dropdown';
+
+    const trigger = link.cloneNode(true);
+    trigger.classList.add('nav-drop-trigger');
+    trigger.removeAttribute('aria-current');
+    const label = type === 'services' ? 'Services' : 'Service Areas';
+    trigger.innerHTML = `${label} <span class="nav-arrow" aria-hidden="true">⌄</span>`;
+    trigger.setAttribute('aria-haspopup', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+
+    const menu = document.createElement('div');
+    menu.className = `nav-drop-menu ${type === 'areas' ? 'nav-area-menu' : ''}`;
+
+    if (type === 'services') {
+      menu.innerHTML = `
+        <a href="/services.html#masonry"><strong>Masonry Repair</strong><small>Brick, stone & block repair</small></a>
+        <a href="/services.html#tuckpointing"><strong>Tuckpointing</strong><small>Mortar joint restoration</small></a>
+        <a href="/services.html#chimney"><strong>Chimney Repair</strong><small>Brick & mortar restoration</small></a>
+        <a href="/services.html#foundation"><strong>Foundation Cracks</strong><small>Concrete & masonry wall repair</small></a>
+        <a href="/services.html#waterproofing"><strong>Waterproofing</strong><small>Basement & water-entry repair</small></a>
+        <a href="/services.html#concrete"><strong>Concrete Repair</strong><small>Flatwork, steps & surfaces</small></a>
+        <a class="drop-all" href="/services.html">View All Services →</a>`;
+    } else {
+      menu.innerHTML = `
+        <div class="area-menu-grid">
+          <a href="/service-areas/springfield-mo.html">Springfield</a>
+          <a href="/service-areas/nixa-mo.html">Nixa</a>
+          <a href="/service-areas/ozark-mo.html">Ozark</a>
+          <a href="/service-areas/republic-mo.html">Republic</a>
+          <a href="/service-areas/battlefield-mo.html">Battlefield</a>
+          <a href="/service-areas/willard-mo.html">Willard</a>
+          <a href="/service-areas/strafford-mo.html">Strafford</a>
+          <a href="/service-areas/rogersville-mo.html">Rogersville</a>
+          <a href="/service-areas/bolivar-mo.html">Bolivar</a>
+          <a href="/service-areas/aurora-mo.html">Aurora</a>
+          <a href="/service-areas/branson-mo.html">Branson</a>
+          <a href="/service-areas/hollister-mo.html">Hollister</a>
+          <a href="/service-areas/marshfield-mo.html">Marshfield</a>
+          <a href="/service-areas/seymour-mo.html">Seymour</a>
+        </div>
+        <a class="drop-all" href="/service-areas.html">View All 50 Service Areas →</a>`;
+    }
+
+    link.replaceWith(wrap);
+    wrap.append(trigger, menu);
+
+    trigger.addEventListener('click', e => {
+      if (window.innerWidth <= 980) {
+        e.preventDefault();
+        const open = wrap.classList.toggle('open');
+        trigger.setAttribute('aria-expanded', String(open));
+      }
+    });
+  };
+
+  if (nav) {
+    buildDropdown(nav.querySelector('a[href$="services.html"], a[href="/services.html"]'), 'services');
+    buildDropdown(nav.querySelector('a[href$="service-areas.html"], a[href="/service-areas.html"]'), 'areas');
+  }
+
   if (toggle && nav) {
     toggle.addEventListener('click', () => {
       const open = nav.classList.toggle('open');
       toggle.setAttribute('aria-expanded', String(open));
       toggle.textContent = open ? '×' : '☰';
     });
-    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+
+    nav.addEventListener('click', e => {
+      const link = e.target.closest('a');
+      if (!link || link.classList.contains('nav-drop-trigger')) return;
       nav.classList.remove('open');
+      nav.querySelectorAll('.nav-dropdown.open').forEach(item => item.classList.remove('open'));
       toggle.setAttribute('aria-expanded', 'false');
       toggle.textContent = '☰';
-    }));
+    });
   }
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.nav-dropdown')) {
+      document.querySelectorAll('.nav-dropdown.open').forEach(item => {
+        item.classList.remove('open');
+        item.querySelector('.nav-drop-trigger')?.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
 
   document.querySelectorAll('[data-year]').forEach(el => el.textContent = new Date().getFullYear());
 
@@ -32,12 +125,15 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
   }
 
-  const form = document.querySelector('form[data-netlify]');
-  if (form) {
+  document.querySelectorAll('form[data-netlify]').forEach(form => {
     const params = new URLSearchParams(window.location.search);
     if (params.get('service')) {
       const select = form.querySelector('select[name="service"]');
       if (select) select.value = params.get('service');
     }
-  }
+    if (params.get('city')) {
+      const city = form.querySelector('input[name="city"], input[name="location"]');
+      if (city) city.value = params.get('city');
+    }
+  });
 })();
