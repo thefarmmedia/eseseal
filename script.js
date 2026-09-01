@@ -6,6 +6,9 @@
     document.head.appendChild(extra);
   }
 
+  document.querySelectorAll('.topbar .container > span').forEach(el => {
+    el.textContent = 'Serving a 60-Mile Radius Around Springfield, MO';
+  });
   document.querySelectorAll('.topbar a[href^="mailto:"]').forEach(link => {
     link.href = 'tel:+14173508848';
     link.textContent = 'Talk to Eric →';
@@ -93,7 +96,6 @@
     }
   });
 
-  // Homepage: put the free-estimate form above the fold on the right side.
   const heroContainer = document.querySelector('.hero > .container');
   if (heroContainer && !heroContainer.querySelector('.hero-quote-card')) {
     heroContainer.classList.add('hero-grid');
@@ -108,12 +110,11 @@
       <span class="eyebrow">Free Project Estimate</span>
       <h2>Tell Eric what needs repaired.</h2>
       <p class="quote-sub">No obligation. Fast response from a local owner-operated company.</p>
-      <form name="homepage-estimate" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html">
-        <input type="hidden" name="form-name" value="homepage-estimate">
+      <form name="estimate" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you.html">
+        <input type="hidden" name="form-name" value="estimate">
         <p hidden><label>Don't fill this out: <input name="bot-field"></label></p>
         <div class="form-grid">
-          <div class="field"><label>First Name</label><input name="first-name" autocomplete="given-name" required placeholder="John"></div>
-          <div class="field"><label>Last Name</label><input name="last-name" autocomplete="family-name" placeholder="Smith"></div>
+          <div class="field full"><label>Name</label><input name="name" autocomplete="name" required placeholder="Your name"></div>
           <div class="field"><label>Phone Number</label><input name="phone" type="tel" autocomplete="tel" required placeholder="417-555-0000"></div>
           <div class="field"><label>Email Address</label><input name="email" type="email" autocomplete="email" placeholder="you@email.com"></div>
           <div class="field full"><label>Service Needed</label><select name="service" required><option value="">Choose a service</option><option>Masonry Repair</option><option>Tuckpointing</option><option>Chimney / Fireplace Masonry</option><option>Foundation Crack Repair</option><option>Basement Waterproofing</option><option>Concrete Repair</option><option>Exterior Caulking / Sealing</option><option>Other</option></select></div>
