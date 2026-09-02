@@ -217,7 +217,7 @@ ${headMeta({ title: svc.metaTitle, description: svc.metaDescription, canonical, 
 </head><body>
 ${header()}
 <main id="main">
-<section class="city-hero"><div class="container"><div class="breadcrumbs"><a href="/">Home</a> / <a href="/services.html">Services</a> / ${svc.name}</div><span class="eyebrow" style="color:#69ceff">ESE Seal Service</span><h1>${svc.h1}</h1><p>${svc.intro}</p><div class="btn-row"><a class="btn btn-primary" href="/contact.html?service=${encodeURIComponent(svc.name)}">Get a Free Estimate →</a><a class="btn btn-outline" href="tel:${PHONE_HREF}">Call ${PHONE}</a></div></div></section>
+<section class="city-hero"><div class="container"><div class="breadcrumbs"><a href="/">Home</a> / <a href="/services.html">Services</a> / ${svc.name}</div><span class="eyebrow" style="color:#69ceff">ESE Seal Service</span><h1>${svc.h1}</h1><p>${svc.intro}</p><div class="btn-row"><a class="btn btn-green" href="/contact.html?service=${encodeURIComponent(svc.name)}">Get a Free Estimate →</a><a class="btn btn-outline" href="tel:${PHONE_HREF}">Call ${PHONE}</a></div></div></section>
 
 <section class="section"><div class="container city-copy-grid"><div>
 
@@ -245,7 +245,7 @@ ${header()}
 <h3 style="margin-top:34px">Related Services</h3>
 <div class="service-links">${relatedHtml}</div>
 
-</div><aside class="city-cta"><span class="eyebrow">Free estimate</span><h3>Have a ${svc.name.toLowerCase()} project?</h3><p class="muted">Tell Eric what's cracked, leaking, loose or deteriorated. You'll talk with the owner — not a call center.</p><a class="btn btn-primary" href="/contact.html?service=${encodeURIComponent(svc.name)}">Request an Estimate</a><a class="btn btn-dark" href="tel:${PHONE_HREF}">Call ${PHONE}</a><p class="muted" style="font-size:.82rem;margin-top:14px">Serving a 60-mile radius around Springfield, Missouri. See the <a href="/service-areas.html" style="color:var(--blue);font-weight:800">full service area list</a>.</p></aside></div></section>
+</div><aside class="city-cta"><span class="eyebrow">Free estimate</span><h3>Have a ${svc.name.toLowerCase()} project?</h3><p class="muted">Tell Eric what's cracked, leaking, loose or deteriorated. You'll talk with the owner — not a call center.</p><a class="btn btn-green" href="/contact.html?service=${encodeURIComponent(svc.name)}">Request an Estimate</a><a class="btn btn-dark" href="tel:${PHONE_HREF}">Call ${PHONE}</a><p class="muted" style="font-size:.82rem;margin-top:14px">Serving a 60-mile radius around Springfield, Missouri. See the <a href="/service-areas.html" style="color:var(--blue);font-weight:800">full service area list</a>.</p></aside></div></section>
 
 <section class="section-sm" style="background:var(--stone)"><div class="container cta-band"><div><h2>Not sure this is the right service?</h2><p>Describe the problem and Eric will point you in the right direction.</p></div><a href="tel:${PHONE_HREF}" class="btn btn-white">Call ${PHONE}</a></div></section>
 </main>

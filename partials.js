@@ -39,7 +39,7 @@ function header(cityQuery) {
   <a href="/about.html">About</a>
   <div class="nav-dropdown"><a href="/service-areas.html" class="nav-drop-trigger" aria-haspopup="true" aria-expanded="false">Service Areas <span class="nav-arrow" aria-hidden="true">▼</span></a><div class="nav-drop-menu nav-area-menu"><div class="area-menu-grid">${areaMenu}</div><a class="drop-all" href="/service-areas.html">View All 50 Service Areas →</a></div></div>
   <a href="/gallery.html">Projects</a>
-  <a href="/contact.html${query}" class="btn btn-dark">Get a Free Estimate</a>
+  <a href="/contact.html${query}" class="btn btn-green">Get a Free Estimate</a>
 </nav></div></header>`;
 }
 
