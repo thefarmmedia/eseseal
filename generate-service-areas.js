@@ -92,7 +92,7 @@ function cityPage(c, index) {
 function serviceAreaIndex() {
   const canonical = `${BASE}/service-areas.html`;
   const title = 'Service Areas | ESE Seal — 60 Miles Around Springfield, MO';
-  const description = 'ESE Seal serves 50 communities within roughly 60 miles of Springfield, Missouri for masonry repair, tuckpointing, foundation crack repair, concrete repair and waterproofing.';
+  const description = 'ESE Seal serves 50 communities within 60 miles of Springfield, MO for masonry repair, tuckpointing, foundation cracks, concrete repair and waterproofing.';
   const crumbLd = breadcrumbLd([{name:'Home',url:`${BASE}/`},{name:'Service Areas',url:canonical}]);
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${title}</title><meta name="description" content="${description}"><link rel="canonical" href="${canonical}"><link rel="icon" href="/icon.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="stylesheet" href="/styles.css">${headMeta({title,description,canonical})}<script type="application/ld+json">${JSON.stringify(LOCAL_BUSINESS_LD)}</script><script type="application/ld+json">${JSON.stringify(crumbLd)}</script></head><body>${header('')}<main id="main"><section class="page-hero"><div class="container"><div class="breadcrumbs"><a href="/">Home</a> / Service Areas</div><h1>50 service areas within 60 miles of Springfield</h1><p>ESE Seal serves homeowners and businesses across southwest Missouri with masonry restoration, tuckpointing, chimney repair, foundation crack repair, concrete repair and waterproofing.</p></div></section><section class="section"><div class="container"><div class="service-area-intro"><div><span class="eyebrow">Springfield-centered coverage</span><h2>Local repair service without limiting the company to one town.</h2><p class="muted">The 60-mile service radius gives ESE Seal room to serve the Springfield metro plus communities north toward Bolivar and Buffalo, east toward Marshfield and Mansfield, south through the Branson area and west toward Mount Vernon, Aurora and Monett.</p><p class="muted">If you are near the edge of the radius, call Eric at <a href="tel:${PHONE_HREF}" style="font-weight:800;color:var(--blue)">${PHONE}</a>. Project size, scope and route timing can determine whether a specific job makes sense.</p></div><div class="radius-card"><strong>60</strong><span>Mile Springfield Service Radius</span><p>50 dedicated city pages built around the same core repair services, with Springfield as the center of the market.</p></div></div><div class="area-section"><span class="eyebrow">All service areas</span><h2>Choose your community</h2><div class="area-grid area-grid-5">${cities.map(c=>`<a class="area-pill" href="/service-areas/${c.slug}.html">${c.name}</a>`).join('')}</div></div></div></section><section class="section-sm"><div class="container cta-band"><div><h2>Don't see your exact location?</h2><p>If you are close to the 60-mile radius, call Eric and ask. The project may still fit the route.</p></div><a href="tel:${PHONE_HREF}" class="btn btn-white">Call ${PHONE}</a></div></section></main>${footer()}</body></html>`;
 }
@@ -102,12 +102,13 @@ function sitemap() {
     ['', '1.0'], ['services.html', '0.9'], ['gallery.html', '0.8'], ['service-areas.html', '0.9'],
     ['about.html', '0.7'], ['contact.html', '0.8'], ['privacy.html', '0.3']
   ];
+  const lastmod = new Date().toISOString().slice(0, 10);
   const urls = [
     ...basePages.map(([p, priority]) => ({ loc: `${BASE}/${p}`, priority })),
     ...SERVICES.map(s => ({ loc: `${BASE}/services/${s.slug}.html`, priority: '0.85' })),
     ...cities.map(c => ({ loc: `${BASE}/service-areas/${c.slug}.html`, priority: '0.75' }))
   ];
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u=>`  <url><loc>${u.loc}</loc><priority>${u.priority}</priority></url>`).join('\n')}\n</urlset>\n`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u=>`  <url><loc>${u.loc}</loc><lastmod>${lastmod}</lastmod><priority>${u.priority}</priority></url>`).join('\n')}\n</urlset>\n`;
 }
 
 const areaDir = path.join(process.cwd(),'service-areas');

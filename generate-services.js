@@ -15,7 +15,7 @@ const DATA = [
   {
     slug: 'masonry-repair', name: 'Masonry Repair',
     metaTitle: 'Masonry Repair Springfield, MO | Brick & Stone Repair | ESE Seal',
-    metaDescription: 'ESE Seal repairs cracked, loose and deteriorated brick, stone and block masonry for homes and businesses within 60 miles of Springfield, MO. Free estimates: (417) 350-8848.',
+    metaDescription: 'ESE Seal repairs cracked, loose and deteriorated brick, stone and block masonry near Springfield, MO. Free estimates: (417) 350-8848.',
     h1: 'Masonry Repair in Springfield, MO',
     intro: "Brick, stone and block masonry take a beating from Missouri weather. ESE Seal repairs damaged masonry on homes and commercial buildings throughout the Springfield area, preserving what can be preserved instead of pushing an unnecessary rebuild.",
     problems: [
@@ -127,7 +127,7 @@ const DATA = [
   {
     slug: 'waterproofing', name: 'Waterproofing',
     metaTitle: 'Waterproofing & Water-Entry Repair Springfield, MO | ESE Seal',
-    metaDescription: 'ESE Seal addresses basement and foundation water-entry points, failed joints and vulnerable exterior transitions for Springfield, MO area properties. Free estimates: (417) 350-8848.',
+    metaDescription: 'ESE Seal repairs basement and foundation water-entry points and exterior transitions near Springfield, MO. Free estimates: (417) 350-8848.',
     h1: 'Waterproofing & Water-Entry Repair in Springfield, MO',
     intro: "Basement and foundation water problems almost always start at a specific point — a crack, a failed joint, porous masonry or an exterior transition that's no longer doing its job. ESE Seal evaluates the visible failure points and applies repair and sealing methods suited to the condition of your property.",
     problems: [
